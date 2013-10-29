@@ -3,10 +3,15 @@ git clone https://github.com/bmatusiak/c9-proxied.git $HOME/c9-proxy
 cd c9-proxy
 npm install
 
+
 echo "adding start up script to /etc/rc.local "
 rclocalcontent=$(cat /etc/rc.local)
-echoLine='echo -en "$HOME/c9-proxy/run-proxy.sh &\n\n$rclocalcontent" > /etc/rc.local'
-sudo su - root -c $echoLine
+echoLine=$(echo -en $HOME'/c9-proxy/run-proxy.sh &\n\n'
+
+echo $echoLine > ./rc.local
+cat /etc/rc.local >> ./rc.local
+sudo mv ./rc.local /etc/rc.local
+
 
 git clone https://github.com/bmatusiak/cloud9.git
 cd cloud9
