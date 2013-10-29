@@ -1,7 +1,7 @@
 var httpProxy = require('http-proxy');
 var serverProxy = httpProxy.createServer(function(req, res, proxy) {
     var prefix = req.headers.host.split(".")[0];
-        if(prefix === "cloud9")
+        if(prefix === "dev")
             proxy.proxyRequest(req, res, {
                 host: 'localhost',
                 port: 3131
