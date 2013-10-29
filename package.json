@@ -2,8 +2,8 @@
     "name": "c9-proxied",
     "version": "1.0.0",
     "dependencies": {
-        "http-proxy":"*",
-        "netutil":"*",
+        "http-proxy":"0.10.3",
+        "netutil":"0.0.1",
         "connect":"1.8.7"
     }
 }
