@@ -1,4 +1,6 @@
 #node.js install
+sudo apt-get install -y build-essential g++ curl libssl-dev apache2-utils git libxml2-dev mongodb
+
 wget http://nodejs.org/dist/v0.8.26/node-v0.8.26-linux-x86.tar.gz
 tar -xvf node-v0.8.26-linux-x86.tar.gz
 mv node-v0.8.26-linux-x86 node-package
