@@ -176,7 +176,7 @@ var serverProxy = httpProxy.createServer(function(req, res, proxy) {
                                 LS_COLORS:process.env.LS_COLORS,
                                 PATH:process.env.PATH,
                                 HOST:req.headers.host,
-                                URL:"http://"+prefix.replace("/",".")+".debian.lan/",
+                                URL:"http://"+prefix.replace("/",".")+".dev.bmatusiak.us/",
                                 APPPORT:req.settings[prefix].port
                             }
                         };
