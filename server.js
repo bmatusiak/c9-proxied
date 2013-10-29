@@ -1,4 +1,6 @@
-var projectDIR = "/home/bmatusiak/projects";
+var projectDIR = "/home/ubuntu/projects";
+var cloud9Path = "/home/ubuntu/c9-proxy/cloud9";
+
 
 var httpProxy = require('http-proxy');
 var runApp = require("./run-app.js");
@@ -7,18 +9,26 @@ var netUtil = require("netutil");
 console.log("starting proxy");
 var pidman = require("./pidman.js");
 
+var basicAuth = require("connect").basicAuth("bmatusiak","cool");
+
 var prefixLogic =  function(req, res,app,cloud9){
     var prefix = req.headers.host.split(".");
-    prefix.pop();
-    prefix.pop();
-    prefix = prefix.reverse();
-    if(prefix[0] && prefix[0] == "cloud9"){
-        prefix.shift();
-        if(cloud9)
-            cloud9(prefix.join("/"),app);
-        else{
-            app(prefix.join("/"));
-        }
+    //http://arg1.arg2.arg3.arg4.arg5/
+    //http://app.dev.host.com/  = runapp
+    //http://app.c9.dev.host.com/  = runapp
+    prefix.pop();//remove arg5
+    prefix.pop();//remove arg4
+    prefix.pop();//remove arg3
+    prefix = prefix.reverse();//reverse to ["cloud9","app"]
+    if(prefix[0] && prefix[0] == "c9"){
+        basicAuth(req,res,function(){
+            prefix.shift();
+            if(cloud9)
+                cloud9(prefix.join("/"),app);
+            else{
+                app(prefix.join("/"));
+            }
+        });
     }else{
         app(prefix.join("/"));
     }
@@ -170,7 +180,7 @@ var serverProxy = httpProxy.createServer(function(req, res, proxy) {
                                 APPPORT:req.settings[prefix].port
                             }
                         };
-                        runApp(projectDIR+"/cloud9",env,function ready(err,app){
+                        runApp(cloud9Path,env,function ready(err,app){
                             if(err){
                                 res.writeHead(500, {
                                     'Content-Type': 'text/plain'

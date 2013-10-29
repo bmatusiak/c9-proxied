@@ -9,6 +9,7 @@ module.exports = function(appDir,opt,ready,closed){
         try{
             var appPackage = require(appDir+"/package.json");
             var useNode;
+            /*
             if(appPackage && appPackage.engines && appPackage.engines.node){
                 if(appPackage.engines.node.indexOf("0.6") >= 0){
                     useNode = "node8";
@@ -17,7 +18,8 @@ module.exports = function(appDir,opt,ready,closed){
                 }else if(appPackage.engines.node.indexOf("0.10") >= 0){
                     useNode = "node10";
                 }
-            }
+            }*/
+            
             if(!useNode) useNode = "node";
             useNode = "/usr/local/bin/"+useNode;
             
